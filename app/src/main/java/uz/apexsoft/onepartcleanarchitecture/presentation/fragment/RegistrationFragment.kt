@@ -1,28 +1,28 @@
-package uz.apexsoft.onepartcleanarchitecture.presentation.fragment
+package uz.uzapexsoft.cleanarchitecture.presentation.fragment
 
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import uz.apexsoft.onepartcleanarchitecture.R
-import uz.apexsoft.onepartcleanarchitecture.presentation.utils.extensions.replaceFragment
-import uz.apexsoft.onepartcleanarchitecture.data.mapper.impl.AuthenticationRequestMapToDomain
-import uz.apexsoft.onepartcleanarchitecture.data.mapper.impl.SaveAuthenticationParamMapToStorage
-import uz.apexsoft.onepartcleanarchitecture.data.repository.AuthRepositoryImpl
-import uz.apexsoft.onepartcleanarchitecture.data.storage.AuthStorageSharedPref
-import uz.apexsoft.onepartcleanarchitecture.data.storage.impl.AuthStorageSharedPrefImpl
-import uz.apexsoft.onepartcleanarchitecture.databinding.FragmentRegistrationBinding
-import uz.apexsoft.onepartcleanarchitecture.domain.models.RegistrationParam
-import uz.apexsoft.onepartcleanarchitecture.domain.repository.AuthRepository
-import uz.apexsoft.onepartcleanarchitecture.domain.usecase.SaveAuthUseCase
-import uz.apexsoft.onepartcleanarchitecture.domain.usecase.impl.SaveAuthUseCaseImpl
+import uz.uzapexsoft.cleanarchitecture.R
+import uz.uzapexsoft.cleanarchitecture.databinding.FragmentRegistrationBinding
+import uz.uzapexsoft.cleanarchitecture.presentation.utils.extensions.replaceFragment
+import uz.uzapexsoft.data.mapper.impl.AuthenticationRequestMapToDomain
+import uz.uzapexsoft.data.mapper.impl.SaveAuthenticationParamMapToStorage
+import uz.uzapexsoft.data.repository.AuthRepositoryImpl
+import uz.uzapexsoft.data.storage.AuthStorage
+import uz.uzapexsoft.data.storage.impl.AuthStorageSharedPrefImpl
+import uz.uzapexsoft.domain.models.params.RegistrationParam
+import uz.uzapexsoft.domain.repository.AuthRepository
+import uz.uzapexsoft.domain.usecase.SaveAuthUseCase
+import uz.uzapexsoft.domain.usecase.impl.SaveAuthUseCaseImpl
 
 class RegistrationFragment : Fragment(R.layout.fragment_registration) {
 
     private var _binding: FragmentRegistrationBinding? = null
     private val binding get() = _binding!!
 
-    private val authStorage: AuthStorageSharedPref by lazy(LazyThreadSafetyMode.NONE) {
+    private val authStorage: AuthStorage by lazy(LazyThreadSafetyMode.NONE) {
         AuthStorageSharedPrefImpl(context = requireContext())
     }
 

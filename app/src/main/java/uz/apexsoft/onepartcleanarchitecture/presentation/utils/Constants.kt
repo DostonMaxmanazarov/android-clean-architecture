@@ -1,3 +1,5 @@
-package uz.apexsoft.onepartcleanarchitecture.presentation.utils
+package uz.uzapexsoft.cleanarchitecture.presentation.utils
 
-object Constants
+object Constants {
+
+}

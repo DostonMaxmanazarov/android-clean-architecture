@@ -1,8 +1,8 @@
-package uz.apexsoft.onepartcleanarchitecture.presentation.activity
+package uz.uzapexsoft.cleanarchitecture.presentation.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import uz.apexsoft.onepartcleanarchitecture.R
+import uz.uzapexsoft.cleanarchitecture.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
