@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace 'uz.uzapexsoft.cleanarchitecture'
-    compileSdk 33
+    compileSdk 32
 
     defaultConfig {
         applicationId 'uz.uzapexsoft.cleanarchitecture'

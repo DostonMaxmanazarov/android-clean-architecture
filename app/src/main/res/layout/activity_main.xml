@@ -4,5 +4,5 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     tools:context=".presentation.activity.MainActivity"
-    android:name="uz.apexsoft.onepartcleanarchitecture.presentation.fragment.RegistrationFragment"
+    android:name="uz.uzapexsoft.cleanarchitecture.presentation.fragment.RegistrationFragment"
     android:layout_height="match_parent" />
