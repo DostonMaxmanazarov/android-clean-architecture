@@ -1,4 +1,4 @@
-package uz.uzapexsoft.cleanarchitecture.presentation.fragment
+package uz.apexsoft.onepartcleanarchitecture.presentation.fragment
 
 import android.os.Bundle
 import android.view.View

@@ -3,6 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    tools:context=".presentation.activity.MainActivity"
+    tools:context="uz.apexsoft.onepartcleanarchitecture.presentation.activity.MainActivity"
     android:name="uz.apexsoft.onepartcleanarchitecture.presentation.fragment.RegistrationFragment"
     android:layout_height="match_parent" />

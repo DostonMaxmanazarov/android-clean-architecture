@@ -1,4 +1,4 @@
-package uz.uzapexsoft.cleanarchitecture.presentation.fragment
+package uz.apexsoft.onepartcleanarchitecture.presentation.fragment
 
 import android.os.Bundle
 import android.view.View
@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import uz.uzapexsoft.cleanarchitecture.R
 import uz.uzapexsoft.cleanarchitecture.databinding.FragmentRegistrationBinding
-import uz.uzapexsoft.cleanarchitecture.presentation.utils.extensions.replaceFragment
+import uz.apexsoft.onepartcleanarchitecture.presentation.utils.extensions.replaceFragment
 import uz.uzapexsoft.data.mapper.impl.AuthenticationRequestMapToDomain
 import uz.uzapexsoft.data.mapper.impl.SaveAuthenticationParamMapToStorage
 import uz.uzapexsoft.data.repository.AuthRepositoryImpl
