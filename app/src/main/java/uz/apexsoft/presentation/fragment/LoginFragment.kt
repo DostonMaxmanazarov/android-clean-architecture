@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import uz.uzapexsoft.cleanarchitecture.R
 import uz.uzapexsoft.cleanarchitecture.databinding.FragmentLoginBinding
+import uz.apexsoft.presentation.models.events.LoginEvent
 import uz.apexsoft.presentation.vm.LoginViewModel
 
 @AndroidEntryPoint
@@ -26,17 +27,17 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun initClickView() = binding.apply {
         btnLogin.setOnClickListener {
-            val phoneNumber = etPhoneNumber.text.toString()
             val password = etPassword.text.toString()
-            vm.login(phoneNumber = phoneNumber, password = password)
+            val phoneNumber = etPhoneNumber.text.toString()
+            val loginEvent = LoginEvent(password = password, phoneNumber = phoneNumber)
+            vm.send(event = loginEvent)
         }
     }
 
     private fun observeData() {
-        vm.resultLiveData.observe(viewLifecycleOwner) { success ->
-            binding.tvSuccess.text = success.toString()
-            if (success) Toast.makeText(requireContext(), R.string.success, Toast.LENGTH_SHORT)
-                .show()
+        vm.resultLiveData.observe(viewLifecycleOwner) { state ->
+            binding.tvSuccess.text = state.result.toString()
+            if (state.result) Toast.makeText(requireContext(), R.string.success, Toast.LENGTH_SHORT).show()
             else Toast.makeText(requireContext(), R.string.failed, Toast.LENGTH_SHORT).show()
         }
     }
