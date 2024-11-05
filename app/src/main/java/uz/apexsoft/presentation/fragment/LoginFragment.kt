@@ -6,9 +6,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import uz.apexsoft.presentation.vm.LoginViewModel
 import uz.uzapexsoft.cleanarchitecture.R
 import uz.uzapexsoft.cleanarchitecture.databinding.FragmentLoginBinding
+import uz.apexsoft.presentation.vm.LoginViewModel
 
 @AndroidEntryPoint
 class LoginFragment : Fragment(R.layout.fragment_login) {

@@ -6,10 +6,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import uz.apexsoft.presentation.utils.extensions.replaceFragment
-import uz.apexsoft.presentation.vm.RegistrationViewModel
 import uz.uzapexsoft.cleanarchitecture.R
 import uz.uzapexsoft.cleanarchitecture.databinding.FragmentRegistrationBinding
+import uz.apexsoft.presentation.utils.extensions.replaceFragment
+import uz.apexsoft.presentation.vm.RegistrationViewModel
 
 @AndroidEntryPoint
 class RegistrationFragment : Fragment(R.layout.fragment_registration) {
