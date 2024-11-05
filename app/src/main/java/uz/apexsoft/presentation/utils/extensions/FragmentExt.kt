@@ -1,4 +1,4 @@
-package uz.uzapexsoft.cleanarchitecture.presentation.utils.extensions
+package uz.apexsoft.presentation.utils.extensions
 
 import android.os.Bundle
 import androidx.annotation.IdRes

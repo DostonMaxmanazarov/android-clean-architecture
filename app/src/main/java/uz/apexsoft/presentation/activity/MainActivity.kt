@@ -1,4 +1,4 @@
-package uz.uzapexsoft.cleanarchitecture.presentation.activity
+package uz.apexsoft.presentation.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
