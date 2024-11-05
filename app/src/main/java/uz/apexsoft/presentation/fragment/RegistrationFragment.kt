@@ -4,22 +4,24 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import uz.apexsoft.presentation.App
 import uz.uzapexsoft.cleanarchitecture.R
 import uz.uzapexsoft.cleanarchitecture.databinding.FragmentRegistrationBinding
 import uz.apexsoft.presentation.utils.extensions.replaceFragment
 import uz.apexsoft.presentation.vm.RegistrationViewModel
-import uz.apexsoft.presentation.vm.impl.RegistrationViewModelImpl
+import javax.inject.Inject
 
 class RegistrationFragment : Fragment(R.layout.fragment_registration) {
     private var _binding: FragmentRegistrationBinding? = null
     private val binding get() = _binding!!
 
-    private val vm: RegistrationViewModel by viewModel<RegistrationViewModelImpl>()
+    @Inject
+    lateinit var vm: RegistrationViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         _binding = FragmentRegistrationBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
+        (requireContext().applicationContext as App).appComponent.inject(this)
         clickView()
         observeData()
     }
