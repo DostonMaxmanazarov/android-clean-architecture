@@ -4,23 +4,22 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import uz.apexsoft.presentation.App
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
+import uz.apexsoft.presentation.vm.LoginViewModel
 import uz.uzapexsoft.cleanarchitecture.R
 import uz.uzapexsoft.cleanarchitecture.databinding.FragmentLoginBinding
-import uz.apexsoft.presentation.vm.LoginViewModel
-import javax.inject.Inject
 
+@AndroidEntryPoint
 class LoginFragment : Fragment(R.layout.fragment_login) {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
-    @Inject
-    lateinit var vm: LoginViewModel
+    private val vm: LoginViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         _binding = FragmentLoginBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
-        (requireContext().applicationContext as App).appComponent.inject(this)
         initClickView()
         observeData()
     }
