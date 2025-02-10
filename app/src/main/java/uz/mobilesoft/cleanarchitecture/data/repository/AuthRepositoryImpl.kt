@@ -1,25 +1,42 @@
 package uz.mobilesoft.cleanarchitecture.data.repository
 
-import uz.mobilesoft.cleanarchitecture.data.mapper.SingleMapper
+import uz.mobilesoft.cleanarchitecture.data.models.mapToAuthRequest
 import uz.mobilesoft.cleanarchitecture.data.storage.AuthStorageSharedPref
-import uz.mobilesoft.cleanarchitecture.data.storage.models.AuthenticationRequest
-import uz.mobilesoft.cleanarchitecture.domain.models.Authentication
+import uz.mobilesoft.cleanarchitecture.domain.models.LoginParam
 import uz.mobilesoft.cleanarchitecture.domain.models.RegistrationParam
 import uz.mobilesoft.cleanarchitecture.domain.repository.AuthRepository
 
+/**
+ * Implementation of `AuthRepository` interface.
+ *
+ * @param authStorage - Shared Preferences-based storage that stores user authentication data
+ * */
 class AuthRepositoryImpl(
     private val authStorage: AuthStorageSharedPref,
-    private val saveAuthParamMapToStorage: SingleMapper<RegistrationParam, AuthenticationRequest>,
-    private val authRequestMapToDomain: SingleMapper<AuthenticationRequest, Authentication>
 ) : AuthRepository {
 
-    override fun saveAuthentication(saveParam: RegistrationParam): Boolean {
-        val authentication = saveAuthParamMapToStorage(value = saveParam)
-        return authStorage.saveAuthentication(authentication)
+    /**
+     * Checks if the provided login credentials match the stored authentication data.
+     * */
+    override fun login(param: LoginParam): Boolean {
+        val auth = authStorage.getAuth()
+        val isEqualPassword = param.password == auth.password
+        val isEqualPhoneNumber = param.phoneNumber == auth.phoneNumber
+        return isEqualPhoneNumber && isEqualPassword
     }
 
-    override fun getAuthentication(): Authentication {
-        val authentication = authStorage.getAuthentication()
-        return authRequestMapToDomain(value = authentication)
+    /**
+     * Registers a new user if the given credentials do not already exist in storage.
+     * */
+    override fun registration(param: RegistrationParam): Boolean {
+        val auth = authStorage.getAuth()
+
+        val isEqualEmail = param.email == auth.email
+        val isEqualPassword = param.password == auth.password
+        val isEqualPhoneNumber = param.phoneNumber == auth.phoneNumber
+        if (isEqualEmail && isEqualPassword && isEqualPhoneNumber) return false
+
+        val authRequest = param.mapToAuthRequest()
+        return authStorage.saveAuth(authRequest)
     }
 }
