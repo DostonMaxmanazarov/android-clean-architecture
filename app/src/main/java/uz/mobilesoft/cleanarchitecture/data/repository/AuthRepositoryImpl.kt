@@ -20,8 +20,12 @@ class AuthRepositoryImpl(
      * */
     override fun login(param: LoginParam): Boolean {
         val auth = authStorage.getAuth()
+
+        val formattedPhoneNumber = param.phoneNumber.formatPhoneNumber()
+
         val isEqualPassword = param.password == auth.password
-        val isEqualPhoneNumber = param.phoneNumber == auth.phoneNumber
+        val isEqualPhoneNumber = formattedPhoneNumber == auth.phoneNumber
+
         return isEqualPhoneNumber && isEqualPassword
     }
 
@@ -31,11 +35,16 @@ class AuthRepositoryImpl(
     override fun registration(param: RegistrationParam): Boolean {
         val auth = authStorage.getAuth()
 
+        val formattedPhoneNumber = param.phoneNumber.formatPhoneNumber()
+
         val isEqualPassword = param.password == auth.password
-        val isEqualPhoneNumber = param.phoneNumber == auth.phoneNumber
+        val isEqualPhoneNumber = formattedPhoneNumber == auth.phoneNumber
+
         if (isEqualPassword && isEqualPhoneNumber) return false
 
         val authRequest = param.mapToAuthRequest()
         return authStorage.saveAuth(authRequest)
     }
+
+    private fun String.formatPhoneNumber() = filter { it.isDigit() }
 }

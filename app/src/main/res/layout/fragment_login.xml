@@ -15,13 +15,12 @@
         android:text="@string/login"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <uz.mobilesoft.cleanarchitecture.presentation.customviews.PhoneNumberEditText
         android:id="@+id/etPhoneNumber"
         style="@style/BasicEditText"
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_height_42"
         android:layout_marginTop="128dp"
-        android:hint="@string/enter_phone_number"
         android:textColor="@color/black"
         android:textColorHint="@color/heather"
         app:layout_constraintTop_toBottomOf="@id/tvTitle" />
