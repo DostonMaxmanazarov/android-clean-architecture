@@ -31,10 +31,9 @@ class AuthRepositoryImpl(
     override fun registration(param: RegistrationParam): Boolean {
         val auth = authStorage.getAuth()
 
-        val isEqualEmail = param.email == auth.email
         val isEqualPassword = param.password == auth.password
         val isEqualPhoneNumber = param.phoneNumber == auth.phoneNumber
-        if (isEqualEmail && isEqualPassword && isEqualPhoneNumber) return false
+        if (isEqualPassword && isEqualPhoneNumber) return false
 
         val authRequest = param.mapToAuthRequest()
         return authStorage.saveAuth(authRequest)

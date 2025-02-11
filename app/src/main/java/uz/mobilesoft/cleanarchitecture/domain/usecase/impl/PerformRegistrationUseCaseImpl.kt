@@ -18,9 +18,6 @@ class PerformRegistrationUseCaseImpl(
         val isValidPhoneNumber =UserValidator.isValidPhoneNumber(param.phoneNumber)
         if (!isValidPhoneNumber) return AuthResult.PhoneNumberError
 
-        val isValidEmail = UserValidator.isValidEmail(param.email)
-        if (!isValidEmail) return AuthResult.EmailError
-
         val isValidPassword = UserValidator.isValidPassword(param.password)
         if (!isValidPassword) return AuthResult.PasswordError
 

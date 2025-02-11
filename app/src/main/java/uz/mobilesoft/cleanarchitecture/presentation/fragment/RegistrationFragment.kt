@@ -42,13 +42,11 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
 
     private fun initClick() = binding.apply {
         btnSaveData.setOnClickListener {
-            val email = etEmail.text.toString()
             val password = etPassword.text.toString()
             val phoneNumber = etPhoneNumber.text.toString()
             val confirmPassword = etConfirmPassword.text.toString()
 
             val registrationParams = RegistrationParam(
-                email = email,
                 password = password,
                 phoneNumber = phoneNumber,
                 confirmPassword = confirmPassword
@@ -71,8 +69,6 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
             AuthResult.PasswordConfirmError -> {}
             AuthResult.PasswordError -> {}
             AuthResult.PhoneNumberError -> {}
-            AuthResult.EmailError -> {}
-
         }
     }
 
