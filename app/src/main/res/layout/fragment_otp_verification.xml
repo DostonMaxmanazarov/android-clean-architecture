@@ -1,48 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/confirmationContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/padding_24"
-    tools:context=".presentation.activity.MainActivity">
+    android:orientation="vertical"
+    android:padding="24dp">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvTitle"
         style="@style/BoldTextView"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/login"
+        android:text="@string/verification_code"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <uz.mobilesoft.cleanarchitecture.presentation.customviews.PhoneNumberEditText
-        android:id="@+id/etPhoneNumber"
-        style="@style/BasicEditText"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/layout_height_42"
-        android:layout_marginTop="128dp"
-        android:textColor="@color/black"
-        android:hint="@string/enter_phone_number"
-        android:textColorHint="@color/heather"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/etPassword"
         style="@style/BasicEditText"
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_height_42"
-        android:layout_marginTop="16dp"
-        android:hint="@string/enter_password"
+        android:layout_marginTop="128dp"
+        android:hint="@string/enter_code"
         android:textColor="@color/black"
         android:textColorHint="@color/heather"
-        app:layout_constraintTop_toBottomOf="@id/etPhoneNumber" />
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_height_48"
+        android:layout_gravity="bottom"
         android:layout_marginBottom="@dimen/margin_56"
-        android:text="@string/login"
+        android:text="@string/verify"
         android:textSize="@dimen/textSize_14"
         app:layout_constraintBottom_toBottomOf="parent" />
 

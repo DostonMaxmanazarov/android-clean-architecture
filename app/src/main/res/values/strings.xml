@@ -17,4 +17,13 @@
     <string name="password_requirement_digit">At least 1 digit</string>
     <string name="failed">Failed</string>
     <string name="success">Success</string>
+    <string name="verification_code">Verification code</string>
+    <string name="enter_code">Enter code</string>
+    <string name="verify">Verify</string>
+    <string name="new_password">New password</string>
+    <string name="done">Done</string>
+    <string name="forgot_password">Forgot password</string>
+    <string name="continue_">Continue</string>
+    <string name="main">Main</string>
+    <string name="enter_phone_number">Enter phone number</string>
 </resources>

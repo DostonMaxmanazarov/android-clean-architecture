@@ -14,15 +14,14 @@ class PhoneNumberEditText @JvmOverloads constructor(
 
     private val prefix = "+998 "
     private val maxLength = prefix.length + 12
+    private var isEditing = false
 
     init {
-        setText(prefix)
-        setSelection(text?.length ?: 0)
+        // setText(prefix)
+        // setSelection(text?.length ?: 0)
         filters = arrayOf(InputFilter.LengthFilter(maxLength))
 
         addTextChangedListener(object : PhoneNumberTextWatcher() {
-            private var isEditing = false
-
             override fun afterTextChanged(s: Editable?) {
                 if (isEditing || s == null) return
 
@@ -53,6 +52,14 @@ class PhoneNumberEditText @JvmOverloads constructor(
             setSelection(prefix.length)
         } else {
             super.onSelectionChanged(selStart, selEnd)
+        }
+    }
+
+    override fun onFocusChanged(focused: Boolean, direction: Int, previouslyFocusedRect: android.graphics.Rect?) {
+        super.onFocusChanged(focused, direction, previouslyFocusedRect)
+        if (focused && text.isNullOrEmpty()) {
+            setText(prefix)
+            setSelection(prefix.length)
         }
     }
 }
