@@ -13,7 +13,7 @@
         android:theme="@style/Theme.OnePartCleanArchitecture"
         tools:targetApi="31">
         <activity
-            android:name="uz.apexsoft.onepartcleanarchitecture.presentation.activity.MainActivity"
+            android:name="uz.mobilesoft.onepartcleanarchitecture.presentation.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

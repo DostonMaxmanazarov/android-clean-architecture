@@ -1,0 +1,67 @@
+package uz.mobilesoft.onepartcleanarchitecture.presentation.fragment
+
+import android.os.Bundle
+import android.view.View
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import uz.mobilesoft.cleanarchitecture.R
+import uz.mobilesoft.cleanarchitecture.databinding.FragmentLoginBinding
+import uz.mobilesoft.data.mapper.impl.AuthenticationRequestMapToDomain
+import uz.mobilesoft.data.mapper.impl.SaveAuthenticationParamMapToStorage
+import uz.mobilesoft.data.repository.AuthRepositoryImpl
+import uz.mobilesoft.data.storage.AuthStorage
+import uz.mobilesoft.data.storage.impl.AuthStorageSharedPrefImpl
+import uz.mobilesoft.domain.models.params.LoginParam
+import uz.mobilesoft.domain.repository.AuthRepository
+import uz.mobilesoft.domain.usecase.GetAuthUseCase
+import uz.mobilesoft.domain.usecase.impl.GetAuthUseCaseImpl
+
+class LoginFragment : Fragment(R.layout.fragment_login) {
+
+    private var _binding: FragmentLoginBinding? = null
+    private val binding get() = _binding!!
+
+    private val authStorage: AuthStorage by lazy(LazyThreadSafetyMode.NONE) {
+        AuthStorageSharedPrefImpl(context = requireContext())
+    }
+
+    private val saveAuthParamMapToStorage = SaveAuthenticationParamMapToStorage()
+    private val authRequestMapToDomain = AuthenticationRequestMapToDomain()
+
+    private val authRepository: AuthRepository by lazy(LazyThreadSafetyMode.NONE) {
+        AuthRepositoryImpl(
+            authStorage = authStorage,
+            saveAuthParamMapToStorage = saveAuthParamMapToStorage,
+            authRequestMapToDomain = authRequestMapToDomain
+        )
+    }
+    private val getAuthUseCase: GetAuthUseCase by lazy(LazyThreadSafetyMode.NONE) {
+        GetAuthUseCaseImpl(authRepository = authRepository)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        _binding = FragmentLoginBinding.bind(view)
+        super.onViewCreated(view, savedInstanceState)
+        initClickView()
+    }
+
+    private fun initClickView() = binding.apply {
+        btnLogin.setOnClickListener {
+            val phoneNumber = etPhoneNumber.text.toString()
+            val password = etPassword.text.toString()
+            val loginParam = LoginParam(
+                phoneNumber = phoneNumber,
+                password = password
+            )
+            val success = getAuthUseCase(param = loginParam)
+            if (success) Toast.makeText(requireContext(), R.string.success, Toast.LENGTH_SHORT).show()
+            else Toast.makeText(requireContext(), R.string.failed, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+}
