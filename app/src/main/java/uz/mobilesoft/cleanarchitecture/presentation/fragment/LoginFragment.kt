@@ -67,13 +67,18 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private fun handlingResult(result: AuthResult) {
         when (result) {
             AuthResult.Success -> replaceFragment(
-                container = R.id.container, fragment = MainFragment(), addToBackStack = true
+                container = R.id.container,
+                fragment = MainFragment(),
+                addToBackStack = true
             )
 
-            AuthResult.Error -> showToast(R.string.failed)
-            AuthResult.PasswordError -> {}
-            AuthResult.PhoneNumberError -> {}
-            else -> {}
+            AuthResult.Error -> showToast(R.string.request_failed)
+
+            AuthResult.PasswordError -> showToast(R.string.password_must_be_full)
+
+            AuthResult.PhoneNumberError -> showToast(R.string.please_full_phone_number)
+
+            else -> showToast(R.string.failed)
         }
     }
 

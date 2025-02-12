@@ -13,10 +13,8 @@ import uz.mobilesoft.cleanarchitecture.data.storage.impl.AuthStorageSharedPrefIm
 import uz.mobilesoft.cleanarchitecture.databinding.FragmentForgotPasswordBinding
 import uz.mobilesoft.cleanarchitecture.domain.models.AuthResult
 import uz.mobilesoft.cleanarchitecture.domain.repository.AuthRepository
-import uz.mobilesoft.cleanarchitecture.domain.usecase.ExecuteForgotPasswordUseCase
-import uz.mobilesoft.cleanarchitecture.domain.usecase.ExecuteRegistrationUseCase
-import uz.mobilesoft.cleanarchitecture.domain.usecase.impl.ExecuteForgotPasswordUseCaseImpl
-import uz.mobilesoft.cleanarchitecture.domain.usecase.impl.ExecuteRegistrationUseCaseImpl
+import uz.mobilesoft.cleanarchitecture.domain.usecase.ResetForgotPasswordUseCase
+import uz.mobilesoft.cleanarchitecture.domain.usecase.impl.ResetForgotPasswordUseCaseImpl
 import uz.mobilesoft.cleanarchitecture.presentation.utils.extensions.replaceFragment
 
 class ForgotPasswordFragment : Fragment(R.layout.fragment_forgot_password) {
@@ -31,8 +29,8 @@ class ForgotPasswordFragment : Fragment(R.layout.fragment_forgot_password) {
         AuthRepositoryImpl(authStorage = authStorage)
     }
 
-    private val forgotPasswordUseCase: ExecuteForgotPasswordUseCase by lazy(LazyThreadSafetyMode.NONE) {
-        ExecuteForgotPasswordUseCaseImpl(authRepository = authRepository)
+    private val forgotPasswordUseCase: ResetForgotPasswordUseCase by lazy(LazyThreadSafetyMode.NONE) {
+        ResetForgotPasswordUseCaseImpl(authRepository = authRepository)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,11 +56,11 @@ class ForgotPasswordFragment : Fragment(R.layout.fragment_forgot_password) {
                 args = bundleOf(SCREEN_TYPE to ForgotPasswordFragment::class.java.simpleName)
             )
 
-            AuthResult.Error -> showToast(R.string.failed)
-            AuthResult.PasswordConfirmError -> {}
-            AuthResult.PasswordError -> {}
-            AuthResult.PhoneNumberError -> {}
-            else -> {}
+            AuthResult.Error -> showToast(R.string.request_failed)
+
+            AuthResult.PhoneNumberError -> showToast(R.string.please_full_phone_number)
+
+            else -> showToast(R.string.failed)
         }
     }
 

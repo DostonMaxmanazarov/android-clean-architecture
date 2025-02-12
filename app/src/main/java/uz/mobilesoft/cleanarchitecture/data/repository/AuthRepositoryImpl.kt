@@ -59,7 +59,7 @@ class AuthRepositoryImpl(
         return isEqualPhoneNumber
     }
 
-    override fun verifyOtp(otp: String): Boolean {
+    override fun verifyOtp(code: String): Boolean {
         return true
     }
 

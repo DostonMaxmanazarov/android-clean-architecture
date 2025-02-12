@@ -2,6 +2,15 @@ package uz.mobilesoft.cleanarchitecture.domain.usecase
 
 import uz.mobilesoft.cleanarchitecture.domain.models.AuthResult
 
+/**
+ * VerifyOtpUseCase interface verifies the entered OTP code.
+ * */
 interface VerifyOtpUseCase {
-    operator fun invoke(otp: String): AuthResult
+
+    /**
+     * @param code is otp code.
+     *
+     * @return indicating success or specific errors.
+     * */
+    operator fun invoke(code: String): AuthResult
 }

@@ -72,11 +72,15 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
                 args = bundleOf(SCREEN_TYPE to RegistrationFragment::class.java.simpleName)
             )
 
-            AuthResult.Error -> showToast(R.string.failed)
-            AuthResult.PasswordConfirmError -> {}
-            AuthResult.PasswordError -> {}
-            AuthResult.PhoneNumberError -> {}
-            else -> {}
+            AuthResult.Error -> showToast(R.string.request_failed)
+
+            AuthResult.PasswordError -> showToast(R.string.password_must_be_full)
+
+            AuthResult.PhoneNumberError -> showToast(R.string.please_full_phone_number)
+
+            AuthResult.PasswordConfirmError -> showToast(R.string.password_and_password_confirm_equal)
+
+            else -> showToast(R.string.failed)
         }
     }
 

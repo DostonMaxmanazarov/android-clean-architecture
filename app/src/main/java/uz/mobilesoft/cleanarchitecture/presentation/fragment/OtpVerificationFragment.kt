@@ -46,8 +46,8 @@ class OtpVerificationFragment : Fragment(R.layout.fragment_otp_verification) {
 
     private fun onViewClicked() = binding.apply {
         btnVerify.setOnClickListener {
-            val otp = etOtp.text.toString()
-            val result = otpUseCase.invoke(otp)
+            val code = etOtp.text.toString()
+            val result = otpUseCase.invoke(code)
             handlingResult(result)
         }
     }
@@ -68,15 +68,15 @@ class OtpVerificationFragment : Fragment(R.layout.fragment_otp_verification) {
                         addToBackStack = true
                     )
 
-                    else -> {}
+                    null -> {}
                 }
             }
 
-            AuthResult.Error -> showToast(R.string.failed)
-            AuthResult.PasswordConfirmError -> {}
-            AuthResult.PasswordError -> {}
-            AuthResult.PhoneNumberError -> {}
-            else -> {}
+            AuthResult.Error -> showToast(R.string.request_failed)
+
+            AuthResult.OtpError -> showToast(R.string.invalid_otp_code)
+
+            else -> showToast(R.string.failed)
         }
     }
 

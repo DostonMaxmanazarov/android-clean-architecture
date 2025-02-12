@@ -24,7 +24,7 @@ class ExecuteRegistrationUseCaseImpl(
         val isEqualPassword = UserValidator.isValidConfirmPassword(param.password, param.confirmPassword)
         if (!isEqualPassword) return AuthResult.PasswordConfirmError
 
-        val result = authRepository.registration(param = param)
+        val result = authRepository.registration(registrationParam = param)
         return if (result) AuthResult.Success
         else AuthResult.Error
     }

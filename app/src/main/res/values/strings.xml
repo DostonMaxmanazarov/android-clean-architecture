@@ -16,6 +16,7 @@
     <string name="password_requirement_capital">At least 1 upper-case letter</string>
     <string name="password_requirement_digit">At least 1 digit</string>
     <string name="failed">Failed</string>
+    <string name="request_failed">Your request failed</string>
     <string name="success">Success</string>
     <string name="verification_code">Verification code</string>
     <string name="enter_code">Enter code</string>
@@ -28,4 +29,9 @@
     <string name="enter_phone_number">Enter phone number</string>
     <string name="have_an_account">You don\'t have an account?</string>
     <string name="create_an_account">Create an account</string>
+    <string name="please_full_phone_number">Please write your full phone number</string>
+    <string name="password_must_be_full">Password must be at least 5 characters</string>
+    <string name="password_and_password_confirm_equal">Password and confirmPassword are not equal</string>
+    <string name="invalid_otp_code">Please write your otp code!</string>
+
 </resources>

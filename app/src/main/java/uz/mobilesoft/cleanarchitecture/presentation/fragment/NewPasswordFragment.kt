@@ -57,14 +57,18 @@ class NewPasswordFragment : Fragment(R.layout.fragment_new_password) {
     private fun handlingResult(result: AuthResult) {
         when (result) {
             AuthResult.Success -> replaceFragment(
-                container = R.id.container, fragment = MainFragment(), addToBackStack = true
+                container = R.id.container,
+                fragment = MainFragment(),
+                addToBackStack = true
             )
 
-            AuthResult.Error -> showToast(R.string.failed)
-            AuthResult.PasswordConfirmError -> {}
-            AuthResult.PasswordError -> {}
-            AuthResult.PhoneNumberError -> {}
-            else -> {}
+            AuthResult.Error -> showToast(R.string.request_failed)
+
+            AuthResult.PasswordConfirmError -> showToast(R.string.password_and_password_confirm_equal)
+
+            AuthResult.PasswordError -> showToast(R.string.password_must_be_full)
+
+            else -> showToast(R.string.failed)
         }
     }
 

@@ -4,7 +4,7 @@ import uz.mobilesoft.cleanarchitecture.domain.models.AuthResult
 import uz.mobilesoft.cleanarchitecture.domain.models.LoginParam
 
 /**
- * Use case for handling user login.
+ * ExecuteLoginUseCase interface for handling user login.
  * */
 interface ExecuteLoginUseCase {
 
