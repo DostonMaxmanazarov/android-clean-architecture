@@ -13,8 +13,9 @@ import uz.mobilesoft.cleanarchitecture.databinding.FragmentLoginBinding
 import uz.mobilesoft.cleanarchitecture.domain.models.AuthResult
 import uz.mobilesoft.cleanarchitecture.domain.models.LoginParam
 import uz.mobilesoft.cleanarchitecture.domain.repository.AuthRepository
-import uz.mobilesoft.cleanarchitecture.domain.usecase.PerformLoginUseCase
-import uz.mobilesoft.cleanarchitecture.domain.usecase.impl.PerformLoginUseCaseImpl
+import uz.mobilesoft.cleanarchitecture.domain.usecase.ExecuteLoginUseCase
+import uz.mobilesoft.cleanarchitecture.domain.usecase.impl.ExecuteLoginUseCaseImpl
+import uz.mobilesoft.cleanarchitecture.presentation.utils.extensions.replaceFragment
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
@@ -27,8 +28,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private val authRepository: AuthRepository by lazy(LazyThreadSafetyMode.NONE) {
         AuthRepositoryImpl(authStorage = authStorage)
     }
-    private val loginUseCase: PerformLoginUseCase by lazy(LazyThreadSafetyMode.NONE) {
-        PerformLoginUseCaseImpl(
+    private val loginUseCase: ExecuteLoginUseCase by lazy(LazyThreadSafetyMode.NONE) {
+        ExecuteLoginUseCaseImpl(
             authRepository = authRepository
         )
     }
@@ -44,17 +45,31 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             val phoneNumber = etPhoneNumber.text.toString()
             val password = etPassword.text.toString()
             val loginParam = LoginParam(
-                phoneNumber = phoneNumber,
-                password = password
+                phoneNumber = phoneNumber, password = password
             )
             val result = loginUseCase.invoke(param = loginParam)
             handlingResult(result)
+        }
+
+        tvRegistration.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
+
+        tvForgotPassword.setOnClickListener {
+            replaceFragment(
+                container = R.id.container,
+                fragment = ForgotPasswordFragment(),
+                addToBackStack = true
+            )
         }
     }
 
     private fun handlingResult(result: AuthResult) {
         when (result) {
-            AuthResult.Success -> showToast(R.string.success)
+            AuthResult.Success -> replaceFragment(
+                container = R.id.container, fragment = MainFragment(), addToBackStack = true
+            )
+
             AuthResult.Error -> showToast(R.string.failed)
             AuthResult.PasswordError -> {}
             AuthResult.PhoneNumberError -> {}

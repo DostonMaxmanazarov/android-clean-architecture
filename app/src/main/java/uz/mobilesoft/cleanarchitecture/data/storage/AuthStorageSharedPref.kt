@@ -19,4 +19,6 @@ interface AuthStorageSharedPref {
      * if no authentication data is found.
      * */
     fun getAuth(): AuthRequest
+
+    fun saveNewPassword(password: String): Boolean
 }

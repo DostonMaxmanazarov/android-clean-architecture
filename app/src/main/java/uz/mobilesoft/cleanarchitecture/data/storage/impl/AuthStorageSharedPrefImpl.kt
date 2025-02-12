@@ -16,6 +16,7 @@ class AuthStorageSharedPrefImpl(
     override fun saveAuth(request: AuthRequest): Boolean {
         sharedPreference.edit().putString(PASSWORD, request.password).apply()
         sharedPreference.edit().putString(PHONE_NUMBER, request.phoneNumber).apply()
+
         return true
     }
 
@@ -25,6 +26,12 @@ class AuthStorageSharedPrefImpl(
             sharedPreference.getString(PHONE_NUMBER, DEFAULT_PHONE_NUMBER) ?: DEFAULT_PHONE_NUMBER
 
         return AuthRequest(password = password, phoneNumber = phoneNumber)
+    }
+
+    override fun saveNewPassword(password: String): Boolean {
+        sharedPreference.edit().putString(PASSWORD, password).apply()
+
+        return true
     }
 
     private companion object {

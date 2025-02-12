@@ -6,7 +6,7 @@ import uz.mobilesoft.cleanarchitecture.domain.models.RegistrationParam
 /**
  * Use case for performing user registration.
  **/
-interface PerformRegistrationUseCase {
+interface ExecuteRegistrationUseCase {
     /**
      *
      * @param param registration parameters, including phone number, password and passwordConfirmation.

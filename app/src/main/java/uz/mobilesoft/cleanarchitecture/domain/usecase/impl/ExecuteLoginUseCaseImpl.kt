@@ -3,15 +3,15 @@ package uz.mobilesoft.cleanarchitecture.domain.usecase.impl
 import uz.mobilesoft.cleanarchitecture.domain.models.AuthResult
 import uz.mobilesoft.cleanarchitecture.domain.models.LoginParam
 import uz.mobilesoft.cleanarchitecture.domain.repository.AuthRepository
-import uz.mobilesoft.cleanarchitecture.domain.usecase.PerformLoginUseCase
+import uz.mobilesoft.cleanarchitecture.domain.usecase.ExecuteLoginUseCase
 import uz.mobilesoft.cleanarchitecture.domain.validator.UserValidator
 
 /**
  * Implementation of `LoginUseCase` interface.
  * */
-class PerformLoginUseCaseImpl(
+class ExecuteLoginUseCaseImpl(
     private val authRepository: AuthRepository
-) : PerformLoginUseCase {
+) : ExecuteLoginUseCase {
     override fun invoke(param: LoginParam): AuthResult {
         val isValidPhoneNumber = UserValidator.isValidPhoneNumber(param.phoneNumber)
         if (!isValidPhoneNumber) return AuthResult.PhoneNumberError

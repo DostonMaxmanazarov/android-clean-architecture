@@ -11,8 +11,7 @@ fun Fragment.addFragment(
     fragment.arguments = args
     requireActivity().supportFragmentManager.commit {
         add(container, fragment)
-        if (addToBackStack)
-            addToBackStack(fragment.javaClass.simpleName)
+        if (addToBackStack) addToBackStack(fragment.javaClass.simpleName)
     }
 }
 
@@ -22,7 +21,6 @@ fun Fragment.replaceFragment(
     fragment.arguments = args
     requireActivity().supportFragmentManager.commit {
         replace(container, fragment)
-        if (addToBackStack)
-            addToBackStack(fragment.javaClass.simpleName)
+        if (addToBackStack) addToBackStack(fragment.javaClass.simpleName)
     }
 }

@@ -6,7 +6,7 @@ import uz.mobilesoft.cleanarchitecture.domain.models.LoginParam
 /**
  * Use case for handling user login.
  * */
-interface PerformLoginUseCase {
+interface ExecuteLoginUseCase {
 
     /**
      * @param param login parameters, including phone number and password.

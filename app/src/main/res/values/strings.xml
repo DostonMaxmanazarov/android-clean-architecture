@@ -26,4 +26,6 @@
     <string name="continue_">Continue</string>
     <string name="main">Main</string>
     <string name="enter_phone_number">Enter phone number</string>
+    <string name="have_an_account">You don\'t have an account?</string>
+    <string name="create_an_account">Create an account</string>
 </resources>

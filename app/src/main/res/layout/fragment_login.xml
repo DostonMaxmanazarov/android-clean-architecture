@@ -21,8 +21,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_height_42"
         android:layout_marginTop="128dp"
-        android:textColor="@color/black"
         android:hint="@string/enter_phone_number"
+        android:textColor="@color/black"
         android:textColorHint="@color/heather"
         app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
@@ -37,13 +37,49 @@
         android:textColorHint="@color/heather"
         app:layout_constraintTop_toBottomOf="@id/etPhoneNumber" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvForgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16"
+        android:text="@string/forgot_password"
+        android:textColor="@color/denim"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etPassword" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_height_48"
-        android:layout_marginBottom="@dimen/margin_56"
         android:text="@string/login"
         android:textSize="@dimen/textSize_14"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvForgotPassword" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitleHaveAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/have_an_account"
+        android:textSize="@dimen/textSize_14"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvRegistration"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvRegistration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/create_an_account"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/denim"
+        android:textSize="@dimen/textSize_14"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvTitleHaveAccount" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

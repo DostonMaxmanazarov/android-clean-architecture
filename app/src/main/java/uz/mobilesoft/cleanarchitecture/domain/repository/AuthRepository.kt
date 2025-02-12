@@ -2,6 +2,7 @@ package uz.mobilesoft.cleanarchitecture.domain.repository
 
 import uz.mobilesoft.cleanarchitecture.domain.models.RegistrationParam
 import uz.mobilesoft.cleanarchitecture.domain.models.LoginParam
+import uz.mobilesoft.cleanarchitecture.domain.models.NewPasswordParam
 
 /**
  * Interface for user authentication repository.
@@ -22,4 +23,10 @@ interface AuthRepository {
      * @return - `true` if the user was successfully registered, `false` if the user already exists.
      **/
     fun registration(param: RegistrationParam): Boolean
+
+    fun forgotPassword(phoneNumber: String): Boolean
+
+    fun verifyOtp(otp: String): Boolean
+
+    fun saveNewPassword(password: String): Boolean
 }

@@ -4,25 +4,24 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.StringRes
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import uz.mobilesoft.cleanarchitecture.R
-import uz.mobilesoft.cleanarchitecture.presentation.utils.extensions.replaceFragment
 import uz.mobilesoft.cleanarchitecture.data.repository.AuthRepositoryImpl
 import uz.mobilesoft.cleanarchitecture.data.storage.AuthStorageSharedPref
 import uz.mobilesoft.cleanarchitecture.data.storage.impl.AuthStorageSharedPrefImpl
-import uz.mobilesoft.cleanarchitecture.databinding.FragmentRegistrationBinding
+import uz.mobilesoft.cleanarchitecture.databinding.FragmentForgotPasswordBinding
+import uz.mobilesoft.cleanarchitecture.databinding.FragmentNewPasswordBinding
 import uz.mobilesoft.cleanarchitecture.domain.models.AuthResult
-import uz.mobilesoft.cleanarchitecture.domain.models.RegistrationParam
+import uz.mobilesoft.cleanarchitecture.domain.models.NewPasswordParam
 import uz.mobilesoft.cleanarchitecture.domain.repository.AuthRepository
 import uz.mobilesoft.cleanarchitecture.domain.usecase.ExecuteRegistrationUseCase
+import uz.mobilesoft.cleanarchitecture.domain.usecase.SaveNewPasswordUseCase
 import uz.mobilesoft.cleanarchitecture.domain.usecase.impl.ExecuteRegistrationUseCaseImpl
+import uz.mobilesoft.cleanarchitecture.domain.usecase.impl.SaveNewPasswordUseCaseImpl
+import uz.mobilesoft.cleanarchitecture.presentation.utils.extensions.replaceFragment
 
-const val SCREEN_TYPE = "screen_type"
-
-class RegistrationFragment : Fragment(R.layout.fragment_registration) {
-
-    private var _binding: FragmentRegistrationBinding? = null
+class NewPasswordFragment : Fragment(R.layout.fragment_new_password) {
+    private var _binding: FragmentNewPasswordBinding? = null
     private val binding get() = _binding!!
 
     private val authStorage: AuthStorageSharedPref by lazy(LazyThreadSafetyMode.NONE) {
@@ -33,43 +32,32 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
         AuthRepositoryImpl(authStorage = authStorage)
     }
 
-    private val registrationUseCase: ExecuteRegistrationUseCase by lazy(LazyThreadSafetyMode.NONE) {
-        ExecuteRegistrationUseCaseImpl(authRepository = authRepository)
+    private val newPasswordUseCase: SaveNewPasswordUseCase by lazy(LazyThreadSafetyMode.NONE) {
+        SaveNewPasswordUseCaseImpl(authRepository = authRepository)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        _binding = FragmentRegistrationBinding.bind(view)
+        _binding = FragmentNewPasswordBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
-        initClick()
+        onViewClicked()
     }
 
-    private fun initClick() = binding.apply {
-        btnSaveData.setOnClickListener {
+    private fun onViewClicked() = binding.apply {
+        btnDone.setOnClickListener {
             val password = etPassword.text.toString()
-            val phoneNumber = etPhoneNumber.text.toString()
-            val confirmPassword = etConfirmPassword.text.toString()
-
-            val registrationParams = RegistrationParam(
-                password = password, phoneNumber = phoneNumber, confirmPassword = confirmPassword
+            val passwordConfirm = etConfirmPassword.text.toString()
+            val param = NewPasswordParam(
+                password = password, passwordConfirm = passwordConfirm
             )
-            val result = registrationUseCase.invoke(param = registrationParams)
+            val result = newPasswordUseCase.invoke(param)
             handlingResult(result)
-        }
-
-        tvLogin.setOnClickListener {
-            replaceFragment(
-                container = R.id.container, fragment = LoginFragment(), addToBackStack = true
-            )
         }
     }
 
     private fun handlingResult(result: AuthResult) {
         when (result) {
             AuthResult.Success -> replaceFragment(
-                container = R.id.container,
-                fragment = OtpVerificationFragment(),
-                addToBackStack = true,
-                args = bundleOf(SCREEN_TYPE to RegistrationFragment::class.java.simpleName)
+                container = R.id.container, fragment = MainFragment(), addToBackStack = true
             )
 
             AuthResult.Error -> showToast(R.string.failed)

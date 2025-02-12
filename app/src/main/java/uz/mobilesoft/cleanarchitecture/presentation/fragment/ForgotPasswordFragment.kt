@@ -7,22 +7,20 @@ import androidx.annotation.StringRes
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import uz.mobilesoft.cleanarchitecture.R
-import uz.mobilesoft.cleanarchitecture.presentation.utils.extensions.replaceFragment
 import uz.mobilesoft.cleanarchitecture.data.repository.AuthRepositoryImpl
 import uz.mobilesoft.cleanarchitecture.data.storage.AuthStorageSharedPref
 import uz.mobilesoft.cleanarchitecture.data.storage.impl.AuthStorageSharedPrefImpl
-import uz.mobilesoft.cleanarchitecture.databinding.FragmentRegistrationBinding
+import uz.mobilesoft.cleanarchitecture.databinding.FragmentForgotPasswordBinding
 import uz.mobilesoft.cleanarchitecture.domain.models.AuthResult
-import uz.mobilesoft.cleanarchitecture.domain.models.RegistrationParam
 import uz.mobilesoft.cleanarchitecture.domain.repository.AuthRepository
+import uz.mobilesoft.cleanarchitecture.domain.usecase.ExecuteForgotPasswordUseCase
 import uz.mobilesoft.cleanarchitecture.domain.usecase.ExecuteRegistrationUseCase
+import uz.mobilesoft.cleanarchitecture.domain.usecase.impl.ExecuteForgotPasswordUseCaseImpl
 import uz.mobilesoft.cleanarchitecture.domain.usecase.impl.ExecuteRegistrationUseCaseImpl
+import uz.mobilesoft.cleanarchitecture.presentation.utils.extensions.replaceFragment
 
-const val SCREEN_TYPE = "screen_type"
-
-class RegistrationFragment : Fragment(R.layout.fragment_registration) {
-
-    private var _binding: FragmentRegistrationBinding? = null
+class ForgotPasswordFragment : Fragment(R.layout.fragment_forgot_password) {
+    private var _binding: FragmentForgotPasswordBinding? = null
     private val binding get() = _binding!!
 
     private val authStorage: AuthStorageSharedPref by lazy(LazyThreadSafetyMode.NONE) {
@@ -33,33 +31,21 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
         AuthRepositoryImpl(authStorage = authStorage)
     }
 
-    private val registrationUseCase: ExecuteRegistrationUseCase by lazy(LazyThreadSafetyMode.NONE) {
-        ExecuteRegistrationUseCaseImpl(authRepository = authRepository)
+    private val forgotPasswordUseCase: ExecuteForgotPasswordUseCase by lazy(LazyThreadSafetyMode.NONE) {
+        ExecuteForgotPasswordUseCaseImpl(authRepository = authRepository)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        _binding = FragmentRegistrationBinding.bind(view)
+        _binding = FragmentForgotPasswordBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
-        initClick()
+        onViewClicked()
     }
 
-    private fun initClick() = binding.apply {
-        btnSaveData.setOnClickListener {
-            val password = etPassword.text.toString()
+    private fun onViewClicked() = binding.apply {
+        btnForgotPass.setOnClickListener {
             val phoneNumber = etPhoneNumber.text.toString()
-            val confirmPassword = etConfirmPassword.text.toString()
-
-            val registrationParams = RegistrationParam(
-                password = password, phoneNumber = phoneNumber, confirmPassword = confirmPassword
-            )
-            val result = registrationUseCase.invoke(param = registrationParams)
+            val result = forgotPasswordUseCase.invoke(phoneNumber)
             handlingResult(result)
-        }
-
-        tvLogin.setOnClickListener {
-            replaceFragment(
-                container = R.id.container, fragment = LoginFragment(), addToBackStack = true
-            )
         }
     }
 
@@ -69,7 +55,7 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
                 container = R.id.container,
                 fragment = OtpVerificationFragment(),
                 addToBackStack = true,
-                args = bundleOf(SCREEN_TYPE to RegistrationFragment::class.java.simpleName)
+                args = bundleOf(SCREEN_TYPE to ForgotPasswordFragment::class.java.simpleName)
             )
 
             AuthResult.Error -> showToast(R.string.failed)

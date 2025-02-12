@@ -3,15 +3,15 @@ package uz.mobilesoft.cleanarchitecture.domain.usecase.impl
 import uz.mobilesoft.cleanarchitecture.domain.models.AuthResult
 import uz.mobilesoft.cleanarchitecture.domain.models.RegistrationParam
 import uz.mobilesoft.cleanarchitecture.domain.repository.AuthRepository
-import uz.mobilesoft.cleanarchitecture.domain.usecase.PerformRegistrationUseCase
+import uz.mobilesoft.cleanarchitecture.domain.usecase.ExecuteRegistrationUseCase
 import uz.mobilesoft.cleanarchitecture.domain.validator.UserValidator
 
 /**
  * Implementation of `PerformRegistrationUseCase` interface.
  * */
-class PerformRegistrationUseCaseImpl(
+class ExecuteRegistrationUseCaseImpl(
     private val authRepository: AuthRepository
-) : PerformRegistrationUseCase {
+) : ExecuteRegistrationUseCase {
 
     override fun invoke(param: RegistrationParam): AuthResult {
 
