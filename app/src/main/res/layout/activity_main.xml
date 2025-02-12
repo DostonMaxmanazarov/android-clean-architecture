@@ -3,6 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    tools:context="uz.mobilesoft.onepartcleanarchitecture.presentation.activity.MainActivity"
-    android:name="uz.mobilesoft.onepartcleanarchitecture.presentation.fragment.RegistrationFragment"
+    tools:context="uz.mobilesoft.presentation.activity.MainActivity"
+    android:name="uz.mobilesoft.presentation.fragment.RegistrationFragment"
     android:layout_height="match_parent" />
