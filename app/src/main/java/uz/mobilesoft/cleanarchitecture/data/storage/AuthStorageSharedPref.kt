@@ -2,7 +2,11 @@ package uz.mobilesoft.cleanarchitecture.data.storage
 
 import uz.mobilesoft.cleanarchitecture.data.models.AuthRequest
 
-
+/**
+ * AuthStorageSharedPref Interface saves user authentication data.
+ *
+ * Using a shared preference-based storage or any other persistent mechanism.
+ */
 interface AuthStorageSharedPref {
     /**
      * Saves the given authentication data.
