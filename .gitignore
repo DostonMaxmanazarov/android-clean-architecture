@@ -15,6 +15,7 @@ local.properties
 
 # Build files
 /build
+build/
 /captures
 
 # System files macos
