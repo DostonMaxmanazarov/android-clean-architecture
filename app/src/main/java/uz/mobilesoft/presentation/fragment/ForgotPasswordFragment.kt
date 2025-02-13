@@ -15,7 +15,7 @@ import uz.mobilesoft.domain.models.AuthResult
 import uz.mobilesoft.domain.repository.AuthRepository
 import uz.mobilesoft.domain.usecase.ResetForgotPasswordUseCase
 import uz.mobilesoft.domain.usecase.impl.ResetForgotPasswordUseCaseImpl
-import uz.mobilesoft.presentation.utils.extensions.replaceFragment
+import uz.mobilesoft.presentation.utils.replaceFragment
 
 class ForgotPasswordFragment : Fragment(R.layout.fragment_forgot_password) {
     private var _binding: FragmentForgotPasswordBinding? = null

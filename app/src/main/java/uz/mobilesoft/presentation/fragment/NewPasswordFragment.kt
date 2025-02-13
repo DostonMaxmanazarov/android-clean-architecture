@@ -15,7 +15,7 @@ import uz.mobilesoft.domain.models.NewPasswordParam
 import uz.mobilesoft.domain.repository.AuthRepository
 import uz.mobilesoft.domain.usecase.SaveNewPasswordUseCase
 import uz.mobilesoft.domain.usecase.impl.SaveNewPasswordUseCaseImpl
-import uz.mobilesoft.presentation.utils.extensions.replaceFragment
+import uz.mobilesoft.presentation.utils.replaceFragment
 
 class NewPasswordFragment : Fragment(R.layout.fragment_new_password) {
     private var _binding: FragmentNewPasswordBinding? = null

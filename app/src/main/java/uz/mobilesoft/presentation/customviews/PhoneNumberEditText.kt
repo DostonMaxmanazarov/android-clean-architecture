@@ -16,8 +16,6 @@ class PhoneNumberEditText @JvmOverloads constructor(
     private var isEditing = false
 
     init {
-        // setText(prefix)
-        // setSelection(text?.length ?: 0)
         filters = arrayOf(InputFilter.LengthFilter(maxLength))
 
         addTextChangedListener(object : PhoneNumberTextWatcher() {

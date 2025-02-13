@@ -14,7 +14,7 @@ import uz.mobilesoft.domain.models.AuthResult
 import uz.mobilesoft.domain.repository.AuthRepository
 import uz.mobilesoft.domain.usecase.VerifyOtpUseCase
 import uz.mobilesoft.domain.usecase.impl.VerifyOtpUseCaseImpl
-import uz.mobilesoft.presentation.utils.extensions.replaceFragment
+import uz.mobilesoft.presentation.utils.replaceFragment
 
 class OtpVerificationFragment : Fragment(R.layout.fragment_otp_verification) {
     private var _binding: FragmentOtpVerificationBinding? = null

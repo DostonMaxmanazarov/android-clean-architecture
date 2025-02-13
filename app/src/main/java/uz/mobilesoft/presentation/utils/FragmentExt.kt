@@ -1,4 +1,4 @@
-package uz.mobilesoft.presentation.utils.extensions
+package uz.mobilesoft.presentation.utils
 
 import android.os.Bundle
 import androidx.annotation.IdRes

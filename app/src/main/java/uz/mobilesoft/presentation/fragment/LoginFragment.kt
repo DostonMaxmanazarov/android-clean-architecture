@@ -15,7 +15,7 @@ import uz.mobilesoft.domain.models.LoginParam
 import uz.mobilesoft.domain.repository.AuthRepository
 import uz.mobilesoft.domain.usecase.ExecuteLoginUseCase
 import uz.mobilesoft.domain.usecase.impl.ExecuteLoginUseCaseImpl
-import uz.mobilesoft.presentation.utils.extensions.replaceFragment
+import uz.mobilesoft.presentation.utils.replaceFragment
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 

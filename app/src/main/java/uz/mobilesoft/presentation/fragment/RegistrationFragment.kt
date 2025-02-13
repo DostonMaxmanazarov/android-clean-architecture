@@ -8,7 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import uz.mobilesoft.cleanarchitecture.R
 import uz.mobilesoft.cleanarchitecture.databinding.FragmentRegistrationBinding
-import uz.mobilesoft.presentation.utils.extensions.replaceFragment
+import uz.mobilesoft.presentation.utils.replaceFragment
 import uz.mobilesoft.data.repository.AuthRepositoryImpl
 import uz.mobilesoft.data.storage.AuthStorageSharedPref
 import uz.mobilesoft.data.storage.impl.AuthStorageSharedPrefImpl
