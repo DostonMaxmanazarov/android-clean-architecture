@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'uz.uzapexsoft.cleanarchitecture'
+    namespace 'uz.mobilesoft.cleanarchitecture'
     compileSdk 33
 
     defaultConfig {
