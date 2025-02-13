@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import uz.mobilesoft.cleanarchitecture.R
 import uz.mobilesoft.cleanarchitecture.databinding.FragmentLoginBinding
 import uz.mobilesoft.data.repository.AuthRepositoryImpl
@@ -16,37 +18,39 @@ import uz.mobilesoft.domain.repository.AuthRepository
 import uz.mobilesoft.domain.usecase.ExecuteLoginUseCase
 import uz.mobilesoft.domain.usecase.impl.ExecuteLoginUseCaseImpl
 import uz.mobilesoft.presentation.utils.replaceFragment
+import uz.mobilesoft.presentation.viewmodel.LoginViewModel
+import uz.mobilesoft.presentation.viewmodel.factory.LoginViewModelFactory
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
-    private val authStorage: AuthStorageSharedPref by lazy(LazyThreadSafetyMode.NONE) {
-        AuthStorageSharedPrefImpl(context = requireContext())
-    }
-    private val authRepository: AuthRepository by lazy(LazyThreadSafetyMode.NONE) {
-        AuthRepositoryImpl(authStorage = authStorage)
-    }
-    private val loginUseCase: ExecuteLoginUseCase by lazy(LazyThreadSafetyMode.NONE) {
-        ExecuteLoginUseCaseImpl(authRepository = authRepository)
-    }
+    private lateinit var viewModel: LoginViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         _binding = FragmentLoginBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
-        initClickView()
+
+        viewModel = ViewModelProvider(
+            this, LoginViewModelFactory(context = requireContext())
+        )[LoginViewModel::class.java]
+
+        onViewClicked()
+
+        observeData()
     }
 
-    private fun initClickView() = binding.apply {
+    private fun onViewClicked() = binding.apply {
         btnLogin.setOnClickListener {
             val phoneNumber = etPhoneNumber.text.toString()
             val password = etPassword.text.toString()
+
             val loginParam = LoginParam(
                 phoneNumber = phoneNumber, password = password
             )
-            val result = loginUseCase.invoke(param = loginParam)
-            handlingResult(result)
+
+            viewModel.login(loginParam)
         }
 
         tvRegistration.setOnClickListener {
@@ -59,6 +63,18 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 fragment = ForgotPasswordFragment(),
                 addToBackStack = true
             )
+        }
+    }
+
+    private fun observeData() {
+        viewModel.resultLiveData.observe(viewLifecycleOwner) { success ->
+            if (success) replaceFragment(
+                container = R.id.container,
+                fragment = MainFragment(),
+                addToBackStack = true
+            )
+
+            else showToast(R.string.request_failed)
         }
     }
 

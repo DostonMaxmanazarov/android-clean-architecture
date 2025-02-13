@@ -6,17 +6,14 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import uz.mobilesoft.cleanarchitecture.R
 import uz.mobilesoft.cleanarchitecture.databinding.FragmentRegistrationBinding
-import uz.mobilesoft.presentation.utils.replaceFragment
-import uz.mobilesoft.data.repository.AuthRepositoryImpl
-import uz.mobilesoft.data.storage.AuthStorageSharedPref
-import uz.mobilesoft.data.storage.impl.AuthStorageSharedPrefImpl
 import uz.mobilesoft.domain.models.AuthResult
+import uz.mobilesoft.presentation.utils.replaceFragment
 import uz.mobilesoft.domain.models.RegistrationParam
-import uz.mobilesoft.domain.repository.AuthRepository
-import uz.mobilesoft.domain.usecase.ExecuteRegistrationUseCase
-import uz.mobilesoft.domain.usecase.impl.ExecuteRegistrationUseCaseImpl
+import uz.mobilesoft.presentation.viewmodel.RegistrationViewModel
+import uz.mobilesoft.presentation.viewmodel.factory.RegistrationViewModelFactory
 
 const val SCREEN_TYPE = "screen_type"
 
@@ -25,41 +22,51 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
     private var _binding: FragmentRegistrationBinding? = null
     private val binding get() = _binding!!
 
-    private val authStorage: AuthStorageSharedPref by lazy(LazyThreadSafetyMode.NONE) {
-        AuthStorageSharedPrefImpl(context = requireContext())
-    }
-
-    private val authRepository: AuthRepository by lazy(LazyThreadSafetyMode.NONE) {
-        AuthRepositoryImpl(authStorage = authStorage)
-    }
-
-    private val registrationUseCase: ExecuteRegistrationUseCase by lazy(LazyThreadSafetyMode.NONE) {
-        ExecuteRegistrationUseCaseImpl(authRepository = authRepository)
-    }
+    private lateinit var viewModel: RegistrationViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         _binding = FragmentRegistrationBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
-        initClick()
+        viewModel = ViewModelProvider(
+            this, RegistrationViewModelFactory(context = requireContext())
+        )[RegistrationViewModel::class.java]
+
+        onViewClicked()
+
+        observeData()
     }
 
-    private fun initClick() = binding.apply {
+    private fun onViewClicked() = binding.apply {
         btnSaveData.setOnClickListener {
             val password = etPassword.text.toString()
             val phoneNumber = etPhoneNumber.text.toString()
             val confirmPassword = etConfirmPassword.text.toString()
 
             val registrationParams = RegistrationParam(
-                password = password, phoneNumber = phoneNumber, confirmPassword = confirmPassword
+                password = password,
+                phoneNumber = phoneNumber,
+                confirmPassword = confirmPassword
             )
-            val result = registrationUseCase.invoke(param = registrationParams)
-            handlingResult(result)
+
+            viewModel.registration(registrationParams)
         }
 
         tvLogin.setOnClickListener {
             replaceFragment(
                 container = R.id.container, fragment = LoginFragment(), addToBackStack = true
             )
+        }
+    }
+
+    private fun observeData() {
+        viewModel.resultLiveData.observe(viewLifecycleOwner) { success ->
+            if (success) replaceFragment(
+                container = R.id.container,
+                fragment = OtpVerificationFragment(),
+                addToBackStack = true,
+                args = bundleOf(SCREEN_TYPE to RegistrationFragment::class.java.simpleName)
+            )
+            else showToast(R.string.request_failed)
         }
     }
 
