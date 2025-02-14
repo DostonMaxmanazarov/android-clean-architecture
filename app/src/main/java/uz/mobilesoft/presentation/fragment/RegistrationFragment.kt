@@ -68,26 +68,17 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
             )
             else showToast(R.string.request_failed)
         }
-    }
 
-    private fun handlingResult(result: AuthResult) {
-        when (result) {
-            AuthResult.Success -> replaceFragment(
-                container = R.id.container,
-                fragment = OtpVerificationFragment(),
-                addToBackStack = true,
-                args = bundleOf(SCREEN_TYPE to RegistrationFragment::class.java.simpleName)
-            )
+        viewModel.phoneNumberErrorLiveData.observe(viewLifecycleOwner){
+            showToast(R.string.please_full_phone_number)
+        }
 
-            AuthResult.Error -> showToast(R.string.request_failed)
+        viewModel.passErrorLiveData.observe(viewLifecycleOwner){
+            showToast(R.string.password_must_be_full)
+        }
 
-            AuthResult.PasswordError -> showToast(R.string.password_must_be_full)
-
-            AuthResult.PhoneNumberError -> showToast(R.string.please_full_phone_number)
-
-            AuthResult.PasswordConfirmError -> showToast(R.string.password_and_password_confirm_equal)
-
-            else -> showToast(R.string.failed)
+        viewModel.passConfirmErrorLiveData.observe(viewLifecycleOwner){
+            showToast(R.string.password_and_password_confirm_equal)
         }
     }
 
