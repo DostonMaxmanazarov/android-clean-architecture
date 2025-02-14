@@ -11,7 +11,7 @@ import uz.mobilesoft.domain.usecase.ExecuteLoginUseCase
 import uz.mobilesoft.domain.usecase.impl.ExecuteLoginUseCaseImpl
 import uz.mobilesoft.presentation.viewmodel.LoginViewModel
 
-class ForgotPasswordViewModelFactory(context: Context) : ViewModelProvider.Factory {
+class NewPassViewModelFactory(context: Context) : ViewModelProvider.Factory {
     private val authStorage: AuthStorageSharedPref by lazy(LazyThreadSafetyMode.NONE) {
         AuthStorageSharedPrefImpl(context = context)
     }
