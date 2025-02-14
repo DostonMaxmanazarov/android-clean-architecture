@@ -14,11 +14,20 @@ class LoginViewModel(
     private var _resultLiveData = MutableLiveData<Boolean>()
     val resultLiveData: LiveData<Boolean> get() = _resultLiveData
 
+    private var _passwordErrorLiveData = MutableLiveData<Unit>()
+    val passwordErrorLiveDat: LiveData<Unit> get() = _passwordErrorLiveData
+
+    private var _phoneNumberErrorLiveData = MutableLiveData<Unit>()
+    val phoneNumberErrorLiveData: LiveData<Unit> get() = _phoneNumberErrorLiveData
+
     fun login(loginParam: LoginParam) {
         val result = loginUseCase(param = loginParam)
         when (result) {
             AuthResult.Success -> _resultLiveData.value = true
-            else -> {_resultLiveData.value = false}
+            AuthResult.Error -> _resultLiveData.value = false
+            AuthResult.PasswordError -> _passwordErrorLiveData.value = Unit
+            AuthResult.PhoneNumberError -> _phoneNumberErrorLiveData.value = Unit
+            else -> {}
         }
     }
 }

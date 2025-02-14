@@ -76,23 +76,13 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
             else showToast(R.string.request_failed)
         }
-    }
 
-    private fun handlingResult(result: AuthResult) {
-        when (result) {
-            AuthResult.Success -> replaceFragment(
-                container = R.id.container,
-                fragment = MainFragment(),
-                addToBackStack = true
-            )
+        viewModel.phoneNumberErrorLiveData.observe(viewLifecycleOwner){
+            showToast(R.string.please_full_phone_number)
+        }
 
-            AuthResult.Error -> showToast(R.string.request_failed)
-
-            AuthResult.PasswordError -> showToast(R.string.password_must_be_full)
-
-            AuthResult.PhoneNumberError -> showToast(R.string.please_full_phone_number)
-
-            else -> showToast(R.string.failed)
+        viewModel.passwordErrorLiveDat.observe(viewLifecycleOwner){
+            showToast(R.string.password_must_be_full)
         }
     }
 
