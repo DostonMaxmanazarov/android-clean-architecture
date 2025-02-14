@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import uz.mobilesoft.cleanarchitecture.R
 import uz.mobilesoft.cleanarchitecture.databinding.FragmentNewPasswordBinding
 import uz.mobilesoft.data.repository.AuthRepositoryImpl
@@ -16,27 +17,26 @@ import uz.mobilesoft.domain.repository.AuthRepository
 import uz.mobilesoft.domain.usecase.SaveNewPasswordUseCase
 import uz.mobilesoft.domain.usecase.impl.SaveNewPasswordUseCaseImpl
 import uz.mobilesoft.presentation.utils.replaceFragment
+import uz.mobilesoft.presentation.viewmodel.NewPassViewModel
+import uz.mobilesoft.presentation.viewmodel.factory.NewPassViewModelFactory
 
 class NewPasswordFragment : Fragment(R.layout.fragment_new_password) {
     private var _binding: FragmentNewPasswordBinding? = null
     private val binding get() = _binding!!
 
-    private val authStorage: AuthStorageSharedPref by lazy(LazyThreadSafetyMode.NONE) {
-        AuthStorageSharedPrefImpl(context = requireContext())
-    }
-
-    private val authRepository: AuthRepository by lazy(LazyThreadSafetyMode.NONE) {
-        AuthRepositoryImpl(authStorage = authStorage)
-    }
-
-    private val newPasswordUseCase: SaveNewPasswordUseCase by lazy(LazyThreadSafetyMode.NONE) {
-        SaveNewPasswordUseCaseImpl(authRepository = authRepository)
-    }
+    private lateinit var viewModel: NewPassViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         _binding = FragmentNewPasswordBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel = ViewModelProvider(
+            this, NewPassViewModelFactory(context = requireContext())
+        )[NewPassViewModel::class.java]
+
         onViewClicked()
+
+        observeData()
     }
 
     private fun onViewClicked() = binding.apply {
@@ -46,26 +46,27 @@ class NewPasswordFragment : Fragment(R.layout.fragment_new_password) {
             val param = NewPasswordParam(
                 password = password, passwordConfirm = passwordConfirm
             )
-            val result = newPasswordUseCase.invoke(param)
-            handlingResult(result)
+            viewModel.saveNewPassword(param)
         }
     }
 
-    private fun handlingResult(result: AuthResult) {
-        when (result) {
-            AuthResult.Success -> replaceFragment(
+    private fun observeData() {
+        viewModel.resultLiveData.observe(viewLifecycleOwner) { success ->
+            if (success) replaceFragment(
                 container = R.id.container,
                 fragment = MainFragment(),
                 addToBackStack = true
             )
 
-            AuthResult.Error -> showToast(R.string.request_failed)
+            else showToast(R.string.request_failed)
+        }
 
-            AuthResult.PasswordConfirmError -> showToast(R.string.password_and_password_confirm_equal)
+        viewModel.passErrorLiveData.observe(viewLifecycleOwner){
+            showToast(R.string.password_must_be_full)
+        }
 
-            AuthResult.PasswordError -> showToast(R.string.password_must_be_full)
-
-            else -> showToast(R.string.failed)
+        viewModel.passConfirmErrorLiveData.observe(viewLifecycleOwner){
+            showToast(R.string.password_and_password_confirm_equal)
         }
     }
 

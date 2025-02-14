@@ -8,8 +8,10 @@ import uz.mobilesoft.data.storage.AuthStorageSharedPref
 import uz.mobilesoft.data.storage.impl.AuthStorageSharedPrefImpl
 import uz.mobilesoft.domain.repository.AuthRepository
 import uz.mobilesoft.domain.usecase.ExecuteLoginUseCase
+import uz.mobilesoft.domain.usecase.SaveNewPasswordUseCase
 import uz.mobilesoft.domain.usecase.impl.ExecuteLoginUseCaseImpl
-import uz.mobilesoft.presentation.viewmodel.LoginViewModel
+import uz.mobilesoft.domain.usecase.impl.SaveNewPasswordUseCaseImpl
+import uz.mobilesoft.presentation.viewmodel.NewPassViewModel
 
 class NewPassViewModelFactory(context: Context) : ViewModelProvider.Factory {
     private val authStorage: AuthStorageSharedPref by lazy(LazyThreadSafetyMode.NONE) {
@@ -18,11 +20,11 @@ class NewPassViewModelFactory(context: Context) : ViewModelProvider.Factory {
     private val authRepository: AuthRepository by lazy(LazyThreadSafetyMode.NONE) {
         AuthRepositoryImpl(authStorage = authStorage)
     }
-    private val loginUseCase: ExecuteLoginUseCase by lazy(LazyThreadSafetyMode.NONE) {
-        ExecuteLoginUseCaseImpl(authRepository = authRepository)
+    private val newPassUseCase: SaveNewPasswordUseCase by lazy(LazyThreadSafetyMode.NONE) {
+        SaveNewPasswordUseCaseImpl(authRepository = authRepository)
     }
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return LoginViewModel(loginUseCase) as T
+        return NewPassViewModel(newPassUseCase) as T
     }
 }
